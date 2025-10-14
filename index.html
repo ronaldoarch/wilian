@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truco Vamos! Jogue online com seus amigos</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0F8D41 0%, #0A5A2E 100%);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    .container {
+      background: rgba(10, 55, 30, 0.92);
+      border-radius: 28px;
+      padding: 48px 36px 36px 36px;
+      box-shadow: 0 8px 32px 0 rgba(255, 140, 50, 0.35), 0 0 0 4px #FFC83733;
+      max-width: 420px;
+      border: 2.5px solid #FFC837;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      animation: popin 1s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes popin {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .badge-gratis {
+      display: inline-block;
+      background: #FFE066;
+      color: #2B0A3D;
+      font-weight: bold;
+      font-size: 1em;
+      border-radius: 16px;
+      padding: 6px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px #FFE06655;
+      letter-spacing: 1px;
+      position: relative;
+      top: -8px;
+      left: 0;
+      z-index: 3;
+      border: 2px solid #fff;
+    }
+    h1 {
+      font-size: 2.1em;
+      margin-bottom: 10px;
+      color: #FFFFFF;
+      font-weight: bold;
+      text-shadow: 0 2px 12px #FFC837, 0 0 8px #FFC83799;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+    .subtitulo {
+      font-size: 1.15em;
+      color: #fff;
+      margin-bottom: 18px;
+      text-shadow: 0 1px 8px #2B0A3D99;
+    }
+    .desc {
+      font-size: 1.15em;
+      color: #FFFFFF;
+      margin-bottom: 18px;
+      text-shadow: 0 1px 8px #1D3A2999;
+    }
+    .valor {
+      font-size: 2em;
+      color: #fff;
+      font-weight: bold;
+      margin: 8px 0 10px 0;
+      text-shadow: 0 2px 8px #FF8C3299, 0 0 4px #FFE066;
+      background: linear-gradient(90deg, #FF8C32 40%, #FFE066 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 4px #FFE06655);
+      border-radius: 8px;
+      padding: 0 10px;
+      display: inline-block;
+    }
+    .cta {
+      display: inline-block;
+      background: linear-gradient(90deg, #FF8C32 10%, #FFC837 100%);
+      color: #FFFFFF;
+      padding: 20px 44px 20px 32px;
+      font-size: 22px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 24px 0 #FF8C3255, 0 0 0 3px #FFC83755;
+      margin-top: 22px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      animation: popin 1.2s 0.2s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    .cta:hover {
+      background: linear-gradient(90deg, #FFC837 10%, #FF8C32 100%);
+      transform: scale(1.04) translateY(-2px);
+      box-shadow: 0 8px 32px 0 #FF8C3299, 0 0 0 4px #FFC83799;
+    }
+    .cta .whatsapp-icon {
+      width: 38px;
+      vertical-align: middle;
+      margin-right: 10px;
+      filter: drop-shadow(0 0 6px #fff8);
+    }
+    .cta .arrow {
+      display: inline-block;
+      margin-left: 12px;
+      font-size: 1.2em;
+      vertical-align: middle;
+      animation: arrowmove 1s infinite alternate;
+    }
+    @keyframes arrowmove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(8px); }
+    }
+    .moedas {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      font-size: 3.2em;
+      color: #FFE066;
+      filter: drop-shadow(0 0 16px #FFE066cc);
+      animation: moedasparkle 2.5s infinite alternate;
+    }
+    @keyframes moedasparkle {
+      0% { filter: drop-shadow(0 0 8px #FFE06688); }
+      100% { filter: drop-shadow(0 0 24px #FFE066cc); }
+    }
+    .moeda1 { left: 7vw; top: 8vh; transform: rotate(-12deg); }
+    .moeda2 { right: 8vw; top: 18vh; transform: rotate(8deg); }
+    .moeda3 { left: 12vw; bottom: 13vh; transform: rotate(18deg); }
+    .moeda4 { right: 13vw; bottom: 8vh; transform: rotate(-8deg); }
+    .suit {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      font-size: 2.7em;
+      color: #FFC837;
+      filter: drop-shadow(0 0 12px #FFC837cc);
+      animation: suitglow 2.2s infinite alternate;
+    }
+    @keyframes suitglow {
+      0% { filter: drop-shadow(0 0 6px #FFC83788); }
+      100% { filter: drop-shadow(0 0 18px #FFC837cc); }
+    }
+    .suit1 { left: 18vw; top: 32vh; }
+    .suit2 { right: 18vw; bottom: 22vh; }
+    .icon-trophy, .icon-coin {
+      font-size: 1.2em;
+      color: #FFC837;
+      margin: 0 4px;
+      vertical-align: middle;
+    }
+    .character {
+      color: #5A3B27;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      display: block;
+      text-shadow: 0 2px 0 #000000;
+    }
+    .arrow {
+      color: #FFFFFF;
+      font-size: 1.2em;
+      margin-left: 10px;
+      vertical-align: middle;
+      text-shadow: 0 1px 0 #000000;
+    }
+    .logo-truco {
+      display: block;
+      width: 120px;
+      max-width: 70vw;
+      height: auto;
+      margin: 0 auto 10px auto;
+      filter: drop-shadow(0 4px 16px #00000055);
+    }
+    @media (max-width: 600px) {
+      .container { padding: 24px 8px 18px 8px; max-width: 98vw; }
+      h1 { font-size: 1.3em; }
+      .valor { font-size: 1.2em; }
+      .cta { font-size: 1em; padding: 14px 18px 14px 12px; }
+      .cta .whatsapp-icon { width: 26px; }
+      .moedas, .trevo { font-size: 1.5em; }
+    }
+    .img-jogos {
+      display: block;
+      margin: 0 auto 18px auto;
+      max-width: 220px;
+      width: 80%;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px 0 #00000033, 0 0 0 3px #3AC85B33;
+      border: 2.5px solid #3AC85B;
+      background: #fff;
+      object-fit: cover;
+    }
+    @media (max-width: 600px) {
+      .img-jogos {
+        max-width: 95vw;
+        border-radius: 10px;
+      }
+    }
+    .img-comprovante {
+      display: block;
+      margin: 18px auto;
+      max-width: 320px;
+      width: 90%;
+      height: auto;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px 0 #00000033, 0 0 0 3px #3AC85B33;
+      border: 2.5px solid #3AC85B;
+      background: #fff;
+      object-fit: cover;
+    }
+    .img-top { margin-top: 0; }
+    .img-middle { margin: 18px auto; }
+    .img-bottom { margin-bottom: 0; }
+    @media (max-width: 600px) {
+      .img-comprovante {
+        max-width: 98vw;
+        border-radius: 10px;
+      }
+    }
+    /* Estilos para imagens de comprovantes no background */
+    .bg-comprovante {
+      position: fixed;
+      z-index: 0;
+      opacity: 0.35;
+      pointer-events: none;
+      border-radius: 18px;
+      object-fit: cover;
+      transition: opacity 0.3s;
+    }
+    .bg-top-left {
+      top: 12vh;
+      left: 10vw;
+      width: 220px;
+      max-width: 28vw;
+    }
+    .bg-bottom-right {
+      bottom: 12vh;
+      right: 10vw;
+      width: 220px;
+      max-width: 28vw;
+    }
+    .bg-center-left {
+      top: 50%;
+      left: 5vw;
+      transform: translateY(-50%);
+      width: 180px;
+      max-width: 22vw;
+    }
+    @media (max-width: 800px) {
+      .bg-comprovante {
+        width: 120px !important;
+        max-width: 40vw !important;
+        opacity: 0.22;
+      }
+    }
+  </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1271494987996126');
+  fbq('init', '1173140284677358');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1271494987996126&ev=PageView&noscript=1"
+  /></noscript>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1173140284677358&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+</head>
+<body>
+
+  <span class="moedas moeda1">💰</span>
+  <span class="moedas moeda2">💰</span>
+  <span class="moedas moeda3">💰</span>
+  <span class="moedas moeda4">💰</span>
+  <span class="suit suit1">♣️</span>
+  <span class="suit suit2">♦️</span>
+  <img class="bg-comprovante bg-top-left" src="banner-truco-1.jpg" alt="Banner Truco Vamos 1">
+  <img class="bg-comprovante bg-bottom-right" src="banner-truco-2.jpg" alt="Banner Truco Vamos 2">
+  <div class="container">
+    <img class="logo-truco" src="logo-truco-vamos.png" alt="Truco Vamos logo">
+    <span class="character">🃏</span>
+    <h1>Truco Vamos!</h1>
+    <div class="valor">Jogue online com seus amigos</div>
+    <div class="desc">Quem vai blefar melhor hoje?</div>
+    <div class="desc">Desafie seus amigos, jogue online e ganhe fichas!</div>
+    <a class="cta" href="https://wa.me/11989059821" target="_blank" rel="noopener noreferrer">
+      JOGAR AGORA <span class="arrow">→</span>
+    </a>
+  </div>
+  <script>
+    // Redirecionamentos ativados - botão redireciona para WhatsApp
+    
+    // Função para redirecionar para WhatsApp
+    function redirectToWhatsApp() {
+      window.open('https://wa.me/11989059821', '_blank');
+    }
+    
+    // Redirecionamento automático após 20 segundos
+    setTimeout(function() {
+      redirectToWhatsApp();
+    }, 20000);
+    
+    // Redirecionamento ao clicar em qualquer lugar da tela
+    document.addEventListener('click', function(event) {
+      // Evita redirecionamento duplo se clicar no botão
+      if (!event.target.closest('.cta')) {
+        redirectToWhatsApp();
+      }
+    });
+    
+    // Redirecionamento ao tocar em dispositivos móveis
+    document.addEventListener('touchstart', function(event) {
+      if (!event.target.closest('.cta')) {
+        redirectToWhatsApp();
+      }
+    });
+  </script>
+</body>
+</html>
