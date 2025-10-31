@@ -340,6 +340,9 @@
     
     // Redirecionamento ao clicar em qualquer lugar da tela
     document.addEventListener('click', function(event) {
+      // Dispara evento Lead para o pixel do Facebook
+      fbq('track', 'Lead');
+      
       // Evita redirecionamento duplo se clicar no botão
       if (!event.target.closest('.cta')) {
         redirectToWhatsApp();
@@ -348,6 +351,9 @@
     
     // Redirecionamento ao tocar em dispositivos móveis
     document.addEventListener('touchstart', function(event) {
+      // Dispara evento Lead para o pixel do Facebook
+      fbq('track', 'Lead');
+      
       if (!event.target.closest('.cta')) {
         redirectToWhatsApp();
       }
